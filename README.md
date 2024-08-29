@@ -1,2 +1,2 @@
 # TaskTrackerCLI
-managing tasks through cli
+creating and managing tasks through cli
