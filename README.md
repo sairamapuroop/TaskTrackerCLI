@@ -27,25 +27,33 @@ Task Tracker CLI is a simple command-line interface (CLI) application built with
 
    cd task-tracker-cli 
 
+3. To run CLI commands globally, please link the project
+
+   npm link
+
 ## Usage 
 
 - Add a TASK
 
-  node index.js add "New Task Created"
+  task-cli add "New Task Created"
 
 - List all tasks
 
-  node index.js list
+  task-cli list
+
+- List tasks based on their progress
+
+  task-cli list "in-progress/to-do/completed"
 
 - Update a task 
 
-  node index.js update <task-id> <task-status> 
+  task-cli update <task-id> <task-status> 
 
   for eg, 
-  node index.js update 1 "completed"
+  task-cli update 1 "completed"
 
 - Delete a task
 
-  node index.js delete <task-id>
+  task-cli delete <task-id>
 
 

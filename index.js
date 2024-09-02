@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { writeFile, readFile, access } from "node:fs/promises";
 import { constants } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -38,7 +40,7 @@ const addTask = async (description) => {
   const newTask = {
     id: tasks.length + 1,
     description,
-    status: "pending",
+    status: "to-do",
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -47,9 +49,14 @@ const addTask = async (description) => {
   console.log("Task added:", description);
 };
 
-const listTasks = async () => {
+const listTasks = async (progress) => {
     const tasks = await loadTasks();
-    tasks.forEach(task => {
+     
+     const newTasks = tasks.filter(task => {
+        return task.status === progress;
+      });
+
+    newTasks.forEach(task => {
         console.log(`${task.id}. ${task.description} [${task.status}] ${task.createdAt} ${task.updatedAt}`);
     });
 };
@@ -61,7 +68,7 @@ const updateTask = async (id, status) => {
         tasks[taskIndex].status = status;
         tasks[taskIndex].updatedAt = new Date();
         await saveTasks(tasks);
-        console.log(`Task ${id} updated to ${status}`);
+        console.log(`Task (TaskID: ${id}) updated to "${status}"`);
     } else {
         console.log('Task not found');
     }
@@ -72,7 +79,7 @@ const deleteTask = async (id) => {
     const updatedTasks = tasks.filter(task => task.id !== parseInt(id));
     if (tasks.length !== updatedTasks.length) {
         await saveTasks(updatedTasks);
-        console.log(`Task ${id} deleted`);
+        console.log(`Task (TaskID: ${id}) deleted`);
     } else {
         console.log('Task not found');
     }
@@ -86,7 +93,7 @@ switch (command) {
        addTask(args[0]);
         break;
     case 'list':
-       listTasks();
+       listTasks(args[0]);
         break;
     case 'update':
         updateTask(args[0], args[1]);
@@ -95,5 +102,7 @@ switch (command) {
         deleteTask(args[0]);
         break;
     default:
-        console.log('Command not recognized');
+        console.log(`to add a task :                   task-cli add "new task" ` );
+        console.log(`to update a task :                task-cli update <task-id> "new task-2" ` );
+        console.log(`to delete a task :                task-cli delete <task-id> ` );
 }
