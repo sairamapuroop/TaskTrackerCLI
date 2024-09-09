@@ -57,3 +57,8 @@ Task Tracker CLI is a simple command-line interface (CLI) application built with
   task-cli delete <task-id>
 
 
+- Search for a task
+
+  task-cli search  -task.description-
+
+
